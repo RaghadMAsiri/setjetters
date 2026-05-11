@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import bcrypt from 'bcryptjs';
 
 const AuthContext = createContext();
 
@@ -10,9 +11,15 @@ export function AuthProvider({ children }) {
   const register = (name, email, password) => {
     const users = JSON.parse(localStorage.getItem('sj_users') || '[]');
     if (users.find(u => u.email === email)) return { error: 'Email already exists' };
-    const newUser = { id: Date.now(), name, email, password };
+    
+    //encrypt the password before storing it in local storage
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    
+    const newUser = { id: Date.now(), name, email, password: hashedPassword };
     users.push(newUser);
     localStorage.setItem('sj_users', JSON.stringify(users));
+    
     const { password: _, ...safeUser } = newUser;
     localStorage.setItem('sj_user', JSON.stringify(safeUser));
     setUser(safeUser);
@@ -21,8 +28,11 @@ export function AuthProvider({ children }) {
 
   const login = (email, password) => {
     const users = JSON.parse(localStorage.getItem('sj_users') || '[]');
-    const found = users.find(u => u.email === email && u.password === password);
+    //find the user with the matching email and compare the hashed password
+    const found = users.find(u => u.email === email && bcrypt.compareSync(password, u.password));
+    
     if (!found) return { error: 'Invalid email or password' };
+    
     const { password: _, ...safeUser } = found;
     localStorage.setItem('sj_user', JSON.stringify(safeUser));
     setUser(safeUser);

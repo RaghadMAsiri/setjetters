@@ -9,14 +9,24 @@ export default function Search() {
   const q = params.get('q') || '';
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null); 
   const [query, setQuery] = useState(q);
   const [filter, setFilter] = useState('All');
 
   useEffect(() => {
     setQuery(q);
     if (!q) return;
+    
     setLoading(true);
-    searchMovies(q).then(setResults).finally(() => setLoading(false));
+    setError(null); // reset error state before making a new search
+    
+    searchMovies(q)
+      .then(setResults)
+      .catch(err => {
+        console.error("Search API Error:", err);
+        setError('Failed to fetch results. Please check your connection or try again later.'); // التقاط الخطأ
+      })
+      .finally(() => setLoading(false));
   }, [q]);
 
   const filtered = results.filter(r => {
@@ -41,7 +51,16 @@ export default function Search() {
       </div>
 
       <div className="container search-body">
-        {q && (
+        {/* (User Feedback) */}
+        {error && (
+          <div className="empty-state" style={{ color: '#ff4d4f' }}>
+            <span>⚠️</span>
+            <h3>Oops! Something went wrong.</h3>
+            <p>{error}</p>
+          </div>
+        )}
+
+        {q && !error && (
           <>
             <div className="search-meta">
               <div className="filter-row">
@@ -82,7 +101,7 @@ export default function Search() {
             }
           </>
         )}
-        {!q && (
+        {!q && !error && (
           <div className="search-prompt">
             <span>✦</span>
             <h2>Search any movie or TV show</h2>

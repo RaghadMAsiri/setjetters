@@ -50,6 +50,7 @@ export default function MovieDetail() {
   const [videos,     setVideos]     = useState([]);
   const [selLoc,     setSelLoc]     = useState(null);
   const [loading,    setLoading]    = useState(true);
+  const [error,      setError]      = useState(null); 
   const [activeTab,  setTab]        = useState('locations');
   const [wiki,       setWiki]       = useState(null);
   const [nearby,     setNearby]     = useState([]);
@@ -61,33 +62,57 @@ export default function MovieDetail() {
     Promise.all([getCountryInfo(country), getWeather(loc.lat, loc.lng)])
       .then(([info, weather]) => {
         if (info || weather) setTravelInfo({ ...(info||{}), ...(weather||{}) });
-      });
+      })
+      .catch(console.error); // catch any errors but don't set an error state since this is non-critical info
   };
 
   useEffect(() => {
-    setLoading(true); setWiki(null); setNearby([]); setTravelInfo(null);
-    getMovieDetails(id, type).then(data => {
-      setMovie(data);
-      const l = getFilmingLocations(data);
-      setLocs(l);
-      const title = data.title || data.name;
-      getWikiSummary(title).then(setWiki);
-      getYouTubeVideos(title).then(setVideos);
-      if (l.length) {
-        setSelLoc(l[0]);
-        getNearbyPlaces(l[0].lat, l[0].lng).then(setNearby);
-        fetchTravelInfo(l[0]);
-      }
-    }).finally(() => setLoading(false));
+    setLoading(true); 
+    setError(null); 
+    setWiki(null); 
+    setNearby([]); 
+    setTravelInfo(null);
+    
+    getMovieDetails(id, type)
+      .then(data => {
+        setMovie(data);
+        const l = getFilmingLocations(data);
+        setLocs(l);
+        const title = data.title || data.name;
+        
+        getWikiSummary(title).then(setWiki).catch(console.error);
+        getYouTubeVideos(title).then(setVideos).catch(console.error);
+        
+        if (l.length) {
+          setSelLoc(l[0]);
+          getNearbyPlaces(l[0].lat, l[0].lng).then(setNearby).catch(console.error);
+          fetchTravelInfo(l[0]);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to load movie details:", err);
+        setError("We couldn't load the details for this movie. Please try again later."); // تعيين رسالة الخطأ
+      })
+      .finally(() => setLoading(false));
   }, [id, type]);
 
   const handleLocSelect = (loc) => {
     setSelLoc(loc); setNearby([]);
-    getNearbyPlaces(loc.lat, loc.lng).then(setNearby);
+    getNearbyPlaces(loc.lat, loc.lng).then(setNearby).catch(console.error);
     fetchTravelInfo(loc);
   };
 
-  if (loading) return <div className="detail-loading"><div className="spinner"/></div>;
+  if (loading) return <div className="detail-loading"><div className="spinner"/>✨ Discovering cinematic details...</div>;
+  
+  // display error message if there's an error fetching movie details
+  if (error) return (
+    <div className="detail-error" style={{ textAlign: 'center', padding: '100px 20px', color: '#ff4d4f' }}>
+      <h1>⚠️ Oops!</h1>
+      <p>{error}</p>
+      <button onClick={() => window.history.back()} style={{ padding: '10px 20px', marginTop: '20px', cursor: 'pointer' }}>Go Back</button>
+    </div>
+  );
+  
   if (!movie)  return <div className="detail-loading"><p>Movie not found</p></div>;
 
   const title    = movie.title || movie.name;

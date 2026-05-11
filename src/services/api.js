@@ -5,20 +5,38 @@ const IMG_BASE  = 'https://image.tmdb.org/t/p';
 
 // ── TMDB ──────────────────────────────────────────────────
 export const searchMovies = async (query) => {
-  const res = await fetch(`${TMDB_BASE}/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&include_adult=false`);
-  const data = await res.json();
-  return data.results?.filter(r => r.media_type !== 'person') || [];
+  try {
+    const res = await fetch(`${TMDB_BASE}/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&include_adult=false`);
+    if (!res.ok) throw new Error(`Failed to search movies. Status: ${res.status}`);
+    const data = await res.json();
+    return data.results?.filter(r => r.media_type !== 'person') || [];
+  } catch (error) {
+    console.error("Search Error:", error);
+    throw error;
+  }
 };
 
 export const getMovieDetails = async (id, type = 'movie') => {
-  const res = await fetch(`${TMDB_BASE}/${type}/${id}?api_key=${TMDB_KEY}&append_to_response=credits,videos,images`);
-  return res.json();
+  try {
+    const res = await fetch(`${TMDB_BASE}/${type}/${id}?api_key=${TMDB_KEY}&append_to_response=credits,videos,images`);
+    if (!res.ok) throw new Error(`Failed to get movie details. Status: ${res.status}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Details Error:", error);
+    throw error;
+  }
 };
 
 export const getTrending = async () => {
-  const res = await fetch(`${TMDB_BASE}/trending/all/week?api_key=${TMDB_KEY}`);
-  const data = await res.json();
-  return data.results?.slice(0, 12) || [];
+  try {
+    const res = await fetch(`${TMDB_BASE}/trending/all/week?api_key=${TMDB_KEY}`);
+    if (!res.ok) throw new Error(`Failed to get trending movies. Status: ${res.status}`);
+    const data = await res.json();
+    return data.results?.slice(0, 12) || [];
+  } catch (error) {
+    console.error("Trending Error:", error);
+    throw error;
+  }
 };
 
 export const imgUrl = (path, size = 'w500') =>
@@ -41,20 +59,28 @@ export const getYouTubeVideos = async (query) => {
   if (!YT_KEY) return [];
   try {
     const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query + ' filming location tour')}&type=video&maxResults=4&key=${YT_KEY}`);
+    if (!res.ok) throw new Error(`YouTube API Error. Status: ${res.status}`);
     const data = await res.json();
-    if (data.error) return [];
+    if (data.error) throw new Error(data.error.message);
     return data.items || [];
-  } catch { return []; }
+  } catch (error) {
+    console.error("YouTube Error:", error);
+    throw error;
+  }
 };
 
 // ── Wikipedia ─────────────────────────────────────────────
 export const getWikiSummary = async (title) => {
   try {
     const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+    if (!res.ok) throw new Error(`Wikipedia API Error. Status: ${res.status}`);
     const data = await res.json();
-    if (data.type === 'disambiguation' || !data.extract) return null;
+    if (data.type === 'disambiguation' || !data.extract) throw new Error('Summary not available');
     return { summary: data.extract, image: data.thumbnail?.source || null, url: data.content_urls?.desktop?.page || null };
-  } catch { return null; }
+  } catch (error) {
+    console.error("Wikipedia Error:", error);
+    throw error;
+  }
 };
 
 // ── Overpass — nearby places ──────────────────────────────
@@ -62,17 +88,22 @@ export const getNearbyPlaces = async (lat, lng) => {
   const query = `[out:json][timeout:10];(node["amenity"="restaurant"](around:500,${lat},${lng});node["amenity"="cafe"](around:500,${lat},${lng}););out body 8;`;
   try {
     const res = await fetch('https://overpass-api.de/api/interpreter', { method: 'POST', body: query });
+    if (!res.ok) throw new Error(`Overpass API Error. Status: ${res.status}`);
     const data = await res.json();
     return data.elements?.filter(e => e.tags?.name) || [];
-  } catch { return []; }
+  } catch (error) {
+    console.error("Nearby Places Error:", error);
+    throw error;
+  }
 };
 
 // ── RestCountries ─────────────────────────────────────────
 export const getCountryInfo = async (countryName) => {
   try {
     const res = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(countryName)}?fields=name,flags,currencies,languages`);
+    if (!res.ok) throw new Error(`RestCountries API Error. Status: ${res.status}`);
     const data = await res.json();
-    if (!data || data.status === 404) return null;
+    if (!data || data.status === 404) throw new Error('Country data not found');
     const c = data[0];
     return {
       flag: c.flags?.emoji || '',
@@ -80,19 +111,26 @@ export const getCountryInfo = async (countryName) => {
       currencySymbol: Object.values(c.currencies || {})[0]?.symbol || '',
       language: Object.values(c.languages || {})[0] || '',
     };
-  } catch { return null; }
+  } catch (error) {
+    console.error("Country Info Error:", error);
+    throw error;
+  }
 };
 
 // ── Open-Meteo weather ────────────────────────────────────
 export const getWeather = async (lat, lng) => {
   try {
     const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weathercode&timezone=auto`);
+    if (!res.ok) throw new Error(`Weather API Error. Status: ${res.status}`);
     const data = await res.json();
     const temp = data.current?.temperature_2m;
     const code = data.current?.weathercode;
     const icon = code <= 1 ? '☀️' : code <= 3 ? '⛅' : code <= 67 ? '🌧' : '❄️';
     return { temp, icon };
-  } catch { return null; }
+  } catch (error) {
+    console.error("Weather Error:", error);
+    throw error;
+  }
 };
 
 // ── Static filming locations data ─────────────────────────

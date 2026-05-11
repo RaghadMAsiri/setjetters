@@ -14,11 +14,39 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !email || !password || !confirm) { setError('Please fill in all fields'); return; }
-    if (password !== confirm) { setError('Passwords do not match'); return; }
-    if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
+    
+    // 1. verify that all fields are filled in
+    if (!name || !email || !password || !confirm) { 
+      setError('Please fill in all fields'); 
+      return; 
+    }
+
+    // 2. verify email format using a simple regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // 3. verify that password and confirm password match
+    if (password !== confirm) { 
+      setError('Passwords do not match'); 
+      return; 
+    }
+
+    // 4. verify password strength (at least 6 characters)
+    if (password.length < 6) { 
+      setError('Password must be at least 6 characters'); 
+      return; 
+    }
+
+    // 5.send the registration data to the AuthContext register function
     const result = register(name, email, password);
-    if (result.error) { setError(result.error); return; }
+    if (result.error) { 
+      setError(result.error); 
+      return; 
+    }
+    
     navigate('/');
   };
 
