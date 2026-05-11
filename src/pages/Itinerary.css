@@ -1,63 +1,282 @@
-.itin-page { min-height: 100vh; }
-.itin-header { background: var(--green); padding: 60px 0; }
-.itin-eyebrow { font-size: 12px; font-weight: 600; color: rgba(201,168,76,0.6); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
-.itin-header h1 { font-family: var(--font-display); font-size: clamp(32px,4vw,52px); font-weight: 800; color: var(--gold); margin-bottom: 10px; }
-.itin-subtitle { font-size: 15px; color: rgba(245,240,232,0.45); }
-.itin-body { padding: 48px 0 60px; }
-.itin-empty { text-align: center; padding: 100px 20px; }
-.itin-empty-icon { font-size: 64px; margin-bottom: 20px; }
-.itin-empty h2 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
-.itin-empty p { color: var(--text-light); font-size: 15px; }
-
-.itin-stats { display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
-.stat-card {
-  display: flex; flex-direction: column; align-items: center;
-  background: var(--green); border-radius: var(--radius-md);
-  padding: 24px 32px; min-width: 130px; gap: 4px;
-  border: 1px solid rgba(201,168,76,0.15);
+/* 
+  Main wrapper for the Itinerary page 
+  Ensures the background covers the full screen height 
+*/
+.itin-page {
+  min-height: 100vh;
 }
-.stat-icon { font-size: 22px; margin-bottom: 4px; }
-.stat-card strong { font-family: var(--font-display); font-size: 32px; font-weight: 800; color: var(--gold); line-height: 1; }
-.stat-card span { font-size: 12px; color: rgba(245,240,232,0.4); letter-spacing: 0.5px; text-transform: uppercase; }
 
-.itin-cards { display: flex; flex-direction: column; gap: 12px; }
+/* --- HEADER SECTION --- */
+
+/* Top header section with our brand's green background */
+.itin-header {
+  background: var(--green);
+  padding: 60px 0;
+}
+
+/* Small, spaced-out uppercase text above the main heading */
+.itin-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(201, 168, 76, 0.6); /* Faded gold */
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Main page title with responsive typography using clamp() */
+.itin-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+/* Subtitle description below the main heading */
+.itin-subtitle {
+  font-size: 15px;
+  color: rgba(245, 240, 232, 0.45); /* Soft off-white */
+}
+
+/* Main content wrapper padding */
+.itin-body {
+  padding: 48px 0 60px;
+}
+
+/* --- EMPTY STATE --- */
+/* Styling for when the user hasn't added any locations to their trip yet */
+
+.itin-empty {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.itin-empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.itin-empty h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.itin-empty p {
+  color: var(--text-light);
+  font-size: 15px;
+}
+
+/* --- STATS OVERVIEW --- */
+
+/* Container for the summary statistics cards (e.g., Total Spots, Cities) */
+.itin-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+/* Individual stat block with dark green background and gold accents */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--green);
+  border-radius: var(--radius-md);
+  padding: 24px 32px;
+  min-width: 130px;
+  gap: 4px;
+  border: 1px solid rgba(201, 168, 76, 0.15); /* Subtle gold border */
+}
+
+.stat-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+/* Large numbers inside the stat card */
+.stat-card strong {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* Label under the stat number */
+.stat-card span {
+  font-size: 12px;
+  color: rgba(245, 240, 232, 0.4);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* --- ITINERARY LIST & CARDS --- */
+
+/* Wrapper for the list of saved locations */
+.itin-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual saved location row/card */
 .itin-card {
-  display: flex; align-items: center; gap: 20px;
-  background: var(--surface); border: 1.5px solid var(--border);
-  border-radius: var(--radius-md); padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.itin-card:hover { border-color: var(--gold); box-shadow: var(--shadow-sm); }
+
+/* Interactive hover effect: highlights the card with brand gold */
+.itin-card:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Large, faded index number on the left side of the card */
 .itin-card-num {
-  font-family: var(--font-display); font-size: 28px; font-weight: 800;
-  color: rgba(201,168,76,0.25); flex-shrink: 0; min-width: 44px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(201, 168, 76, 0.25);
+  flex-shrink: 0;
+  min-width: 44px;
 }
-.itin-card-body { flex: 1; }
-.itin-card-body h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 5px; }
-.itin-city { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-light); margin-bottom: 5px; }
-.itin-city svg { fill: var(--gold); flex-shrink: 0; }
-.itin-scene { font-size: 12px; color: var(--text-mid); font-style: italic; margin-bottom: 6px; font-family: var(--font-serif); }
-.itin-movie-tag { font-size: 11px; background: rgba(26,46,26,0.08); color: var(--green-mid); padding: 3px 10px; border-radius: 12px; font-weight: 600; }
-.itin-card-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* Main text container inside the card */
+.itin-card-body {
+  flex: 1;
+}
+
+/* Spot name/title */
+.itin-card-body h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 5px;
+}
+
+/* Location/City formatting with an inline icon */
+.itin-city {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+
+.itin-city svg {
+  fill: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Specific movie scene description styled elegantly */
+.itin-scene {
+  font-size: 12px;
+  color: var(--text-mid);
+  font-style: italic;
+  margin-bottom: 6px;
+  font-family: var(--font-serif);
+}
+
+/* Small pill-shaped tag showing the movie/show name */
+.itin-movie-tag {
+  font-size: 11px;
+  background: rgba(26, 46, 26, 0.08);
+  color: var(--green-mid);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* --- CARD ACTION BUTTONS --- */
+
+/* Wrapper for the buttons on the right side of the card */
+.itin-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Primary action button (e.g., Navigate/Directions) */
 .itin-nav-btn {
-  background: var(--green); color: var(--gold); padding: 9px 16px;
-  border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
-  text-decoration: none; transition: all 0.2s ease; border: none;
+  background: var(--green);
+  color: var(--gold);
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
 }
-.itin-nav-btn:hover { background: var(--green-mid); }
+
+.itin-nav-btn:hover {
+  background: var(--green-mid);
+}
+
+/* Secondary action button (e.g., View Wikipedia/Details) */
 .itin-wiki-btn {
-  background: none; color: var(--green); border: 1.5px solid var(--border);
-  padding: 8px 14px; border-radius: var(--radius-sm); font-size: 13px;
-  font-weight: 600; text-decoration: none; transition: all 0.2s ease;
+  background: none;
+  color: var(--green);
+  border: 1.5px solid var(--border);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
-.itin-wiki-btn:hover { border-color: var(--gold); color: var(--gold-dk); }
+
+.itin-wiki-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold-dk);
+}
+
+/* Delete/Remove button styled as a minimal circle */
 .itin-remove-btn {
-  background: none; border: 1.5px solid var(--border); color: var(--text-light);
-  width: 34px; height: 34px; border-radius: 50%; font-size: 14px;
-  cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center;
+  background: none;
+  border: 1.5px solid var(--border);
+  color: var(--text-light);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.itin-remove-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* Turns red on hover to clearly indicate a destructive action */
+.itin-remove-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-  .itin-card { flex-direction: column; align-items: flex-start; }
-  .itin-card-actions { width: 100%; }
+  /* Stack the card contents vertically on smaller screens */
+  .itin-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Make the action buttons span the full width */
+  .itin-card-actions {
+    width: 100%;
+  }
 }

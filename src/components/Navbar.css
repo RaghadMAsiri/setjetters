@@ -1,58 +1,162 @@
+/* Main navbar container: sticky position with a nice glassmorphism blur effect */
 .navbar {
-  position: sticky; top: 0; z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: rgba(26, 46, 26, 0.92);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(201, 168, 76, 0.2);
   transition: all 0.3s ease;
 }
+
+/* Dynamic class added via JS when the user scrolls down */
 .navbar.scrolled {
   background: rgba(26, 46, 26, 0.98);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
+/* Inner wrapper to keep everything aligned and properly spaced */
 .navbar-inner {
-  max-width: 1280px; margin: 0 auto; padding: 0 60px;
-  height: 68px; display: flex; align-items: center; gap: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 60px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
+
+/* Logo container grouping the icon and text */
 .navbar-logo {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
 }
+
+/* Styling the logo icon and applying the custom spin animation */
 .logo-icon {
-  font-size: 18px; color: var(--gold);
+  font-size: 18px;
+  color: var(--gold);
   animation: spin-slow 8s linear infinite;
 }
-@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* Custom keyframes for the continuous rotating logo effect */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Brand text styling using our display font */
 .logo-text {
-  font-family: var(--font-display); font-size: 20px; font-weight: 800;
-  color: var(--gold); letter-spacing: 0.5px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 0.5px;
 }
+
+/* Search bar container with rounded corners and a subtle border */
 .navbar-search {
-  flex: 1; max-width: 380px; display: flex; align-items: center; gap: 10px;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 30px; padding: 0 16px; transition: all 0.25s ease;
+  flex: 1;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 30px;
+  padding: 0 16px;
+  transition: all 0.25s ease;
 }
-.navbar-search:focus-within { border-color: var(--gold); background: rgba(255,255,255,0.1); }
-.navbar-search svg { color: rgba(201,168,76,0.6); flex-shrink: 0; }
+
+/* Highlight the search container when the input is focused */
+.navbar-search:focus-within {
+  border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Search icon color adjustments */
+.navbar-search svg {
+  color: rgba(201, 168, 76, 0.6);
+  flex-shrink: 0;
+}
+
+/* Resetting default input styles for a cleaner look */
 .navbar-search input {
-  flex: 1; background: none; border: none; outline: none;
-  color: #fff; font-size: 14px; padding: 10px 0; font-family: var(--font-body);
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 0;
+  font-family: var(--font-body);
 }
-.navbar-search input::placeholder { color: rgba(255,255,255,0.3); }
-.navbar-links { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+
+/* Making the placeholder text slightly transparent */
+.navbar-search input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Navigation links container pushed to the right edge */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+/* Default styling for the navigation anchor tags */
 .navbar-links a {
-  color: rgba(255,255,255,0.55); font-size: 14px; font-weight: 500;
-  padding: 8px 16px; border-radius: 20px; transition: all 0.2s ease; letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
 }
-.navbar-links a:hover { color: var(--gold); }
-.navbar-links a.active { color: var(--gold); background: rgba(201,168,76,0.1); }
+
+/* Hover state for links */
+.navbar-links a:hover {
+  color: var(--gold);
+}
+
+/* Active state for the currently visited page */
+.navbar-links a.active {
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.1);
+}
+
+/* Custom styled logout button with hover effects */
 .navbar-logout {
-  background: rgba(201,168,76,0.15); color: var(--gold);
-  border: 1px solid rgba(201,168,76,0.3); padding: 8px 16px;
-  border-radius: 20px; font-size: 14px; font-weight: 500;
-  cursor: pointer; transition: all 0.2s ease; font-family: var(--font-body);
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
 }
-.navbar-logout:hover { background: rgba(201,168,76,0.25); }
+
+.navbar-logout:hover {
+  background: rgba(201, 168, 76, 0.25);
+}
+
+/* Mobile responsiveness: Adjust padding and hide search bar to save space */
 @media (max-width: 768px) {
-  .navbar-inner { padding: 0 20px; gap: 16px; }
-  .navbar-search { display: none; }
+  .navbar-inner {
+    padding: 0 20px;
+    gap: 16px;
+  }
+
+  .navbar-search {
+    display: none;
+  }
 }

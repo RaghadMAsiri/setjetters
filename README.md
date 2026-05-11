@@ -2,8 +2,8 @@
 
 **SetJetters** is a cinema tourism web application that bridges the gap between movies and real-world travel. Discover the actual filming locations of your favourite movies and TV shows, explore them on an interactive map, and plan your cinematic journey.
 
-🔗 **Live Demo:** [setjetters-pied.vercel.app](https://setjetters-pied.vercel.app)
-📁 **Repository:** [github.com/RaneemAlshamrani/setjetters](https://github.com/RaneemAlshamrani/setjetters)
+🔗 **Live Demo:** [setjetters-pied.vercel.app](https://setjetters.vercel.app/)
+📁 **Repository:** [github.com/RaghadMAsiri/setjetters](https://github.com/RaghaMAsiri/setjetters)
 
 ---
 
@@ -12,7 +12,7 @@
 | Name | Student ID | Role |
 |------|------------|------|
 | Raghad Asiri | 2208261 | Project Manager & Frontend Developer |
-| Raneem Al-Shammari | 2208199 | UI/UX Designer & Frontend Developer |
+| Raneem Al-Shomrani | 2208199 | UI/UX Designer & Frontend Developer |
 | Lamia Adel | 2211848 | Frontend Developer & API Integration |
 
 > **Course:** CPIT 405 — Web Development
@@ -72,7 +72,7 @@
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/RaneemAlshamrani/setjetters.git
+git clone https://github.com/RaghadMAsiri/setjetters.git
 cd setjetters
 ```
 
@@ -115,12 +115,16 @@ setjetters/
 │   │   └── Navbar.css
 │   ├── context/
 │   │   └── AppContext.jsx
+        └── AuthContext.jsx
 │   ├── pages/
 │   │   ├── Home.jsx / Home.css
 │   │   ├── Search.jsx / Search.css
 │   │   ├── MovieDetail.jsx / MovieDetail.css
 │   │   ├── Itinerary.jsx / Itinerary.css
+│   │   ├── Login.jsx / Login.css
+│   │   ├── Register.jsx
 │   │   └── Profile.jsx / Profile.css
+│   │   └── Search.jsx / Search.css
 │   ├── services/
 │   │   └── api.js
 │   ├── App.jsx

@@ -37,9 +37,9 @@
 }
 
 .auth-error {
-  background: rgba(192,57,43,0.1);
+  background: rgba(192, 57, 43, 0.1);
   color: var(--red);
-  border: 1px solid rgba(192,57,43,0.3);
+  border: 1px solid rgba(192, 57, 43, 0.3);
   border-radius: var(--radius-sm);
   padding: 10px 16px;
   font-size: 13px;
