@@ -45,6 +45,13 @@
 }
 .navbar-links a:hover { color: var(--gold); }
 .navbar-links a.active { color: var(--gold); background: rgba(201,168,76,0.1); }
+.navbar-logout {
+  background: rgba(201,168,76,0.15); color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.3); padding: 8px 16px;
+  border-radius: 20px; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s ease; font-family: var(--font-body);
+}
+.navbar-logout:hover { background: rgba(201,168,76,0.25); }
 @media (max-width: 768px) {
   .navbar-inner { padding: 0 20px; gap: 16px; }
   .navbar-search { display: none; }

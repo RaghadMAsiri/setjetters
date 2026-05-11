@@ -50,4 +50,22 @@
 .spot-img { aspect-ratio: 4/3; background-size: cover; background-position: center; position: relative; transition: transform 0.5s ease; overflow: hidden; }
 .spot-card:hover .spot-img { transform: scale(1.04); }
 .spot-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,46,26,0.8) 0%, transparent 60%); }
-.spot-badge { position: absolute; top: 12px; left: 12px; z-index: 1; background: rgba(26,46,26,0.85); backdrop-filter: blur(8px); color: var(--gold); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; display: flex; align-items: ce
+.spot-badge { position: absolute; top: 12px; left: 12px; z-index: 1; background: rgba(26,46,26,0.85); backdrop-filter: blur(8px); color: var(--gold); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; border: 1px solid rgba(201,168,76,0.3); }
+.spot-info { padding: 16px; }
+.spot-info h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.spot-city { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
+.spot-city svg { fill: var(--gold); flex-shrink: 0; }
+.spot-scene { font-size: 12px; color: var(--text-mid); font-style: italic; margin-bottom: 12px; font-family: var(--font-serif); }
+.spot-cta { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--gold); transition: gap 0.2s ease; }
+.spot-card:hover .spot-cta { gap: 10px; }
+
+.how-section { padding: 80px 0; background: var(--green); }
+.how-section .section-eyebrow { color: rgba(201,168,76,0.7); }
+.how-section .section-title { color: var(--gold-lt); margin-bottom: 56px; }
+.steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
+@media (max-width: 768px) { .steps { grid-template-columns: repeat(2,1fr); } }
+.step { text-align: center; }
+.step-num { font-family: var(--font-display); font-size: 48px; font-weight: 800; color: rgba(201,168,76,0.15); line-height: 1; margin-bottom: -8px; }
+.step-icon { font-size: 28px; margin-bottom: 12px; }
+.step h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+.step p { font-size: 13px; color: rgba(245,240,232,0.5); line-height: 1.7; }

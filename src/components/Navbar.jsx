@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 export default function Navbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [query, setQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,6 +40,11 @@ export default function Navbar() {
           <Link to="/"          className={pathname === '/'          ? 'active' : ''}>Discover</Link>
           <Link to="/itinerary" className={pathname === '/itinerary' ? 'active' : ''}>My Trips</Link>
           <Link to="/profile"   className={pathname === '/profile'   ? 'active' : ''}>Profile</Link>
+          {user ? (
+            <button className="navbar-logout" onClick={logout}>Logout</button>
+          ) : (
+            <Link to="/login" className={pathname === '/login' ? 'active' : ''}>Login</Link>
+          )}
         </div>
       </div>
     </nav>
